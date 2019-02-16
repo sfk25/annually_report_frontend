@@ -25,10 +25,13 @@
 <script>
 export default {
   name: 'List',
-  data () {
-    return {
-      articles: null
-    }
+  // data () {
+  //   return {
+  //     articles: null
+  //   }
+  // },
+  props: {
+    articles: Array
   },
   methods: {
     assign: function (articles) {

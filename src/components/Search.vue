@@ -1,6 +1,6 @@
 <template>
 <div class="container">
-  <h1>記事一覧</h1>
+  <h1>年報一覧</h1>
 
   <h2>検索条件</h2>
 
@@ -11,14 +11,16 @@
       <td><input type="text" @change="search" @keyup="search" v-model="title"></td>
     </tr>
     <tr>
+      <!-- TODO セレクトボックス -->
       <td>グループ名</td>
-      <td><input type="text" @change="search" @keypress="search"></td>
-    </tr>
-    <tr>
-      <td>氏名</td>
       <td><input type="text"></td>
     </tr>
     <tr>
+      <td>氏名</td>
+      <td><input type="text" @change="search" @keyup="search" v-model="userName"></td>
+    </tr>
+    <tr>
+      <!-- TODO セレクトボックス -->
       <td>対象年</td>
       <td>
         <select>
@@ -27,17 +29,19 @@
       </td>
     </tr>
     <tr>
+      <!-- TODO セレクトボックス -->
       <td>使用した技術</td>
       <td><input type="text"></td>
     </tr>
     <tr>
+      <!-- TODO セレクトボックス -->
       <td>担当した工程</td>
       <td><input type="text"></td>
     </tr>
     </tbody>
   </table>
 
-  <list ref="list"></list>
+  <list ref="list" v-bind="articles"></list>
 
 </div>
 </template>
@@ -47,10 +51,15 @@ import axios from 'axios'
 import List from './Search/List'
 
 export default {
-  name: 'List',
+  name: 'Search', // TODO 必要？
   data () {
     return {
-      title: ''
+      title: '',
+      groupId: '',
+      userName: '',
+      targetYear: '',
+      tagId: 0,
+      processId: 0
     }
   },
   mounted () {
@@ -58,15 +67,17 @@ export default {
   },
   methods: {
     search: function () {
-      console.log('Check title')
-      console.log(this.title)
-
       let params = {
-        title: this.title
+        title: this.title,
+        groupId: this.groupId,
+        userName: this.userName,
+        targetYear: this.targetYear,
+        tagId: this.tagId,
+        processId: this.processId
       }
 
       axios
-        // TODO ドメイン名を環境ごとに切り分けたい
+        // TODO ドメインを環境ごとに切り分けたい
         .post('http://localhost:8090/api/v1/articles/search', params)
         .then(function (response) {
           console.log('Check data')
