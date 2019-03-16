@@ -4,18 +4,17 @@
   <table>
     <thead>
     <tr>
-      <td>ID</td>
-      <td>ユーザーID</td>
+      <!-- TODO グループ名、ユーザー名、タグ、工程、コメント数、いいね数 -->
       <td>タイトル</td>
-      <td>内容</td>
+      <td>年度</td>
+      <td>投稿日</td>
     </tr>
     </thead>
     <tbody>
     <tr v-for="(article, key, index) in articles" :key="index">
-      <td>{{article.id}}</td>
-      <td>{{article.user_id}}</td>
       <td>{{article.title}}</td>
-      <td>{{article.value}}</td>
+      <td>{{article.created_year}}年</td>
+      <td>{{article.updated_at}}</td>
     </tr>
     </tbody>
   </table>
@@ -25,18 +24,10 @@
 <script>
 export default {
   name: 'List',
-  // data () {
-  //   return {
-  //     articles: null
-  //   }
-  // },
   props: {
     articles: Array
   },
   methods: {
-    assign: function (articles) {
-      this.articles = articles
-    }
   }
 }
 </script>

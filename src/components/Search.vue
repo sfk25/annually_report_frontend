@@ -4,44 +4,63 @@
 
   <h2>検索条件</h2>
 
-  <table>
+  <table class="hoge">
     <tbody>
     <tr>
       <td>タイトル</td>
       <td><input type="text" @change="search" @keyup="search" v-model="title"></td>
     </tr>
     <tr>
-      <!-- TODO セレクトボックス -->
       <td>グループ名</td>
-      <td><input type="text"></td>
+      <td>
+        <select @change="search" v-model="groupId">
+          <option v-for="(group, index) in groups" :key="index" :value="index">
+            {{group.value}}
+          </option>
+        </select>
+      </td>
     </tr>
     <tr>
       <td>氏名</td>
       <td><input type="text" @change="search" @keyup="search" v-model="userName"></td>
     </tr>
     <tr>
-      <!-- TODO セレクトボックス -->
-      <td>対象年</td>
+      <td>対象年度</td>
       <td>
-        <select>
-          <option>選択しない</option>
+        <select @change="search" v-model="targetYear">
+          <option value="" selected>選択しない</option>
+          <option v-for="(year, index) in years" :key="index">
+            {{year}}年
+          </option>
         </select>
       </td>
     </tr>
     <tr>
-      <!-- TODO セレクトボックス -->
       <td>使用した技術</td>
-      <td><input type="text"></td>
+      <td>
+        <input type="text" value="" list="tag-list" @change="search" v-model="tag">
+        <datalist id="tag-list">
+          <option v-for="(tag, index) in tags" :key="index" :value="tag.value">
+            {{tag.value}}
+          </option>
+        </datalist>
+      </td>
     </tr>
     <tr>
-      <!-- TODO セレクトボックス -->
       <td>担当した工程</td>
-      <td><input type="text"></td>
+      <td>
+        <select @change="search" v-model="processId">
+          <option value="0" selected>選択しない</option>
+          <option v-for="(process, index) in processes" :key="index" :value="process.id">
+            {{process.value}}
+          </option>
+        </select>
+      </td>
     </tr>
     </tbody>
   </table>
 
-  <list ref="list" v-bind="articles"></list>
+  <list v-bind:articles="articles"></list>
 
 </div>
 </template>
@@ -51,19 +70,27 @@ import axios from 'axios'
 import List from './Search/List'
 
 export default {
-  name: 'Search', // TODO 必要？
+  name: 'Search',
   data () {
     return {
+      articles: [],
+      // 指定した条件
       title: '',
       groupId: '',
       userName: '',
       targetYear: '',
-      tagId: 0,
-      processId: 0
+      tag: '',
+      processId: 0,
+      // 表示する条件
+      tags: [],
+      groups: [],
+      processes: [],
+      years: []
     }
   },
   mounted () {
     this.search()
+    this.getConds()
   },
   methods: {
     search: function () {
@@ -72,17 +99,33 @@ export default {
         groupId: this.groupId,
         userName: this.userName,
         targetYear: this.targetYear,
-        tagId: this.tagId,
+        tag: this.tag,
         processId: this.processId
       }
 
+      console.log('-----Check params')
+      console.log(params)
+
       axios
         // TODO ドメインを環境ごとに切り分けたい
-        .post('http://localhost:8090/api/v1/articles/search', params)
+        .post('http://localhost:8090/api/v1/article/search', params)
         .then(function (response) {
-          console.log('Check data')
-          console.log(response.data)
-          this.$refs.list.assign(response.data)
+          this.articles = response.data
+        }.bind(this))
+        .catch((res) => {
+          console.log('error')
+          console.error(res)
+        })
+    },
+    getConds: function () {
+      axios
+        .get('http://localhost:8090/api/v1/article/getConds')
+        .then(function (response) {
+          let data = response.data
+          this.groups = data.groups
+          this.processes = data.processes
+          this.tags = data.tags
+          this.years = data.years
         }.bind(this))
         .catch((res) => {
           console.log('error')
