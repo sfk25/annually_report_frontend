@@ -2,19 +2,20 @@
 <div class="container">
   <h1>年報一覧</h1>
 
-  <h2>検索条件</h2>
-
-  <table class="hoge">
+  <table class="table mx-auto w-50">
     <tbody>
     <tr>
       <td>タイトル</td>
-      <td><input type="text" @change="search" @keyup="search" v-model="title"></td>
+      <td>
+        <input type="text" class="form-control" @change="search" @keyup="search" v-model="title" placeholder="アサイン初日">
+      </td>
     </tr>
     <tr>
-      <td>グループ名</td>
+      <td>グループ</td>
       <td>
-        <select @change="search" v-model="groupId">
-          <option v-for="(group, index) in groups" :key="index" :value="index">
+        <select @change="search" v-model="groupId" class="form-control">
+          <option value="" selected>選択しない</option>
+          <option v-for="(group, index) in groups" :key="index" :value="group.id">
             {{group.value}}
           </option>
         </select>
@@ -22,23 +23,26 @@
     </tr>
     <tr>
       <td>氏名</td>
-      <td><input type="text" @change="search" @keyup="search" v-model="userName"></td>
+      <td>
+        <input type="text" class="form-control" @change="search" @keyup="search" v-model="userName" placeholder="田中太郎">
+      </td>
     </tr>
     <tr>
       <td>対象年度</td>
       <td>
-        <select @change="search" v-model="targetYear">
+        <select @change="search" v-model="targetYear" class="form-control">
           <option value="" selected>選択しない</option>
-          <option v-for="(year, index) in years" :key="index">
+          <option v-for="(year, index) in years" :key="index" :value="year">
             {{year}}年
           </option>
         </select>
       </td>
     </tr>
     <tr>
+      <!-- TODO 複数選択 -->
       <td>使用した技術</td>
       <td>
-        <input type="text" value="" list="tag-list" @change="search" v-model="tag">
+        <input type="text" class="form-control" value="" list="tag-list" @change="search" v-model="tag" placeholder="Java">
         <datalist id="tag-list">
           <option v-for="(tag, index) in tags" :key="index" :value="tag.value">
             {{tag.value}}
@@ -47,9 +51,10 @@
       </td>
     </tr>
     <tr>
+      <!-- TODO 複数選択 -->
       <td>担当した工程</td>
       <td>
-        <select @change="search" v-model="processId">
+        <select @change="search" v-model="processId" class="form-control">
           <option value="0" selected>選択しない</option>
           <option v-for="(process, index) in processes" :key="index" :value="process.id">
             {{process.value}}
@@ -59,6 +64,11 @@
     </tr>
     </tbody>
   </table>
+
+  <!-- TODO 条件のクリア機能 -->
+  <!-- TODO 並び替え機能 -->
+  <!-- TODO 件数表示 -->
+  <!-- TODO ページネーション機能かもっと見るボタン -->
 
   <list v-bind:articles="articles"></list>
 

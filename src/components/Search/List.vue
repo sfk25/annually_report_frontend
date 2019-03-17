@@ -1,13 +1,13 @@
 <template>
 <div>
   <h2>検索結果</h2>
-  <table>
+  <table class="table table-bordered table-hover">
     <thead>
-    <tr>
+    <tr class="table-active">
       <!-- TODO コメント数、いいね数 -->
       <td>タイトル</td>
       <td>グループ</td>
-      <td>ユーザー</td>
+      <td>氏名</td>
       <td>使用した技術</td>
       <td>担当した工程</td>
       <td>年度</td>
