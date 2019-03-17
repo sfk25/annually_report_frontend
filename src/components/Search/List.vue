@@ -4,8 +4,12 @@
   <table>
     <thead>
     <tr>
-      <!-- TODO グループ名、ユーザー名、タグ、工程、コメント数、いいね数 -->
+      <!-- TODO コメント数、いいね数 -->
       <td>タイトル</td>
+      <td>グループ</td>
+      <td>ユーザー</td>
+      <td>使用した技術</td>
+      <td>担当した工程</td>
       <td>年度</td>
       <td>投稿日</td>
     </tr>
@@ -13,8 +17,20 @@
     <tbody>
     <tr v-for="(article, key, index) in articles" :key="index">
       <td>{{article.title}}</td>
-      <td>{{article.created_year}}年</td>
-      <td>{{article.updated_at}}</td>
+      <td>{{article.groupName}}</td>
+      <td>{{article.userName}}</td>
+      <td>
+        <span v-for="(value, index) in article.tags" :key="index">
+          {{value}}
+        </span>
+      </td>
+      <td>
+        <span v-for="(value, index) in article.processes" :key="index">
+          {{value}}
+        </span>
+      </td>
+      <td>{{article.createdYear}}年</td>
+      <td>{{article.createdAt}}</td>
     </tr>
     </tbody>
   </table>
