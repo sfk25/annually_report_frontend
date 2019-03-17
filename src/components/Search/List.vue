@@ -20,11 +20,13 @@
       <td>{{article.groupName}}</td>
       <td>{{article.userName}}</td>
       <td>
+        <!-- TODO 無いときの表示 -->
         <span v-for="(value, index) in article.tags" :key="index">
           {{value}}
         </span>
       </td>
       <td>
+        <!-- TODO 無いときの表示 -->
         <span v-for="(value, index) in article.processes" :key="index">
           {{value}}
         </span>
