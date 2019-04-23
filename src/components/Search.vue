@@ -112,13 +112,12 @@ export default {
         tag: this.tag,
         processId: this.processId
       }
-
-      console.log('-----Check params')
-      console.log(params)
-
       axios
         // TODO ドメインを環境ごとに切り分けたい
-        .post('http://localhost:8090/api/v1/article/search', params)
+        .post('http://localhost:8090/api/v1/article/search', params, {
+          xsrfHeaderName: 'X-XSRF-TOKEN',
+          withCredentials: true
+        })
         .then(function (response) {
           this.articles = response.data
         }.bind(this))
@@ -129,7 +128,10 @@ export default {
     },
     getConds: function () {
       axios
-        .get('http://localhost:8090/api/v1/article/getConds')
+        .get('http://localhost:8090/api/v1/article/getConds', {
+          xsrfHeaderName: 'X-XSRF-TOKEN',
+          withCredentials: true
+        })
         .then(function (response) {
           let data = response.data
           this.groups = data.groups
