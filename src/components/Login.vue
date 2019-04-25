@@ -20,6 +20,7 @@
     </table>
 
     <button @click="login">ログイン</button>
+    <!-- TODO ログアウトのボタン移動 -->
     <button @click="logout">ログアウト</button>
 
   </div>
@@ -49,6 +50,7 @@ export default {
           withCredentials: true
         })
         .then(function (response) {
+          // TODO ユーザー情報の設定
           router.push('articles')
         })
         .catch((res) => {
