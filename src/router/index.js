@@ -27,7 +27,7 @@ router.beforeEach((to, from, next) => {
   if (to.matched.some(record => record.meta.requiresAuth)) {
     axios
     // TODO ドメインを環境ごとに切り分けたい
-      .post('http://localhost:8090/api/v1/login/init', {}, {
+      .post('http://localhost:8090/api/v1/auth/init', {}, {
         xsrfHeaderName: 'X-XSRF-TOKEN',
         withCredentials: true
       })

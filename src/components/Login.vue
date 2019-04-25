@@ -20,6 +20,7 @@
     </table>
 
     <button @click="login">ログイン</button>
+    <button @click="logout">ログアウト</button>
 
   </div>
 </template>
@@ -43,12 +44,26 @@ export default {
       }
       axios
       // TODO ドメインを環境ごとに切り分けたい
-        .post('http://localhost:8090/api/v1/login', params, {
+        .post('http://localhost:8090/api/v1/auth/login', params, {
           xsrfHeaderName: 'X-XSRF-TOKEN',
           withCredentials: true
         })
         .then(function (response) {
           router.push('articles')
+        })
+        .catch((res) => {
+          console.error(res)
+        })
+    },
+    logout: function () {
+      axios
+      // TODO ドメインを環境ごとに切り分けたい
+        .post('http://localhost:8090/api/v1/auth/logout', {}, {
+          xsrfHeaderName: 'X-XSRF-TOKEN',
+          withCredentials: true
+        })
+        .then(function (response) {
+          // TODO Vue側のユーザー情報削除
         })
         .catch((res) => {
           console.error(res)
