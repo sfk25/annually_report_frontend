@@ -44,7 +44,8 @@ export default {
         password: this.password
       }
       axios
-      // TODO ドメインを環境ごとに切り分けたい
+        // TODO ドメインを環境ごとに切り分ける
+        // TODO 設定をどこかでまとめる
         .post('http://localhost:8090/api/v1/auth/login', params, {
           xsrfHeaderName: 'X-XSRF-TOKEN',
           withCredentials: true
@@ -59,7 +60,7 @@ export default {
     },
     logout: function () {
       axios
-      // TODO ドメインを環境ごとに切り分けたい
+        // TODO ドメインを環境ごとに切り分ける
         .post('http://localhost:8090/api/v1/auth/logout', {}, {
           xsrfHeaderName: 'X-XSRF-TOKEN',
           withCredentials: true

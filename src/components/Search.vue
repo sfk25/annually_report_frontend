@@ -114,7 +114,7 @@ export default {
       }
 
       axios
-        // TODO ドメインを環境ごとに切り分けたい
+        // TODO ドメインを環境ごとに切り分ける
         .post('http://localhost:8090/api/v1/article/search', params, {
           xsrfHeaderName: 'X-XSRF-TOKEN',
           withCredentials: true
@@ -129,6 +129,7 @@ export default {
     },
     getConds: function () {
       axios
+        // TODO ドメインを環境ごとに切り分ける
         .get('http://localhost:8090/api/v1/article/getConds', {
           xsrfHeaderName: 'X-XSRF-TOKEN',
           withCredentials: true
