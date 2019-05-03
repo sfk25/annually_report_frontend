@@ -20,8 +20,6 @@
     </table>
 
     <button @click="login">ログイン</button>
-    <!-- TODO ログアウトのボタン移動 -->
-    <button @click="logout">ログアウト</button>
 
   </div>
 </template>
@@ -52,21 +50,8 @@ export default {
         })
         .then(function (response) {
           // TODO ユーザー情報の設定
+          localStorage.userName = response.data.name
           router.push('articles')
-        })
-        .catch((res) => {
-          console.error(res)
-        })
-    },
-    logout: function () {
-      axios
-        // TODO ドメインを環境ごとに切り分ける
-        .post('http://localhost:8090/api/v1/auth/logout', {}, {
-          xsrfHeaderName: 'X-XSRF-TOKEN',
-          withCredentials: true
-        })
-        .then(function (response) {
-          // TODO Vue側のユーザー情報削除
         })
         .catch((res) => {
           console.error(res)

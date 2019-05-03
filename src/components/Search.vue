@@ -112,7 +112,6 @@ export default {
         tag: this.tag,
         processId: this.processId
       }
-
       axios
         // TODO ドメインを環境ごとに切り分ける
         .post('http://localhost:8090/api/v1/article/search', params, {
