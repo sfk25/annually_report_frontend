@@ -1,7 +1,7 @@
 <template>
   <div id="app">
-    <Header></Header>
-    <router-view/>
+    <Header ref="header"></Header>
+    <router-view @setUserName="setUserName"></router-view>
   </div>
 </template>
 
@@ -11,6 +11,12 @@ export default {
   name: 'App',
   components: {
     Header
+  },
+  methods: {
+    // ヘッダーにユーザー名を設定する（ログイン完了時に呼ばれる）
+    setUserName: function () {
+      this.$refs.header.setUserName()
+    }
   }
 }
 </script>

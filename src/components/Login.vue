@@ -49,10 +49,12 @@ export default {
           withCredentials: true
         })
         .then(function (response) {
-          // TODO ユーザー情報の設定
+          // ローカルストレージにユーザー名を設定
           localStorage.userName = response.data.name
+          // ヘッダーにユーザー名を設定する
+          this.$emit('setUserName')
           router.push('articles')
-        })
+        }.bind(this))
         .catch((res) => {
           console.error(res)
         })

@@ -2,7 +2,7 @@
   <div>
     <nav class="navbar navbar-dark bg-dark">
       <router-link to="/" class="navbar-brand">Annually Report</router-link>
-      <div class="dropdown" v-if="this.userName !== ''">
+      <div class="dropdown" v-if="userName !== '' && userName !== undefined">
         <button type="button" class="btn btn-secondary dropdown-toggle"
                 id="dropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           {{userName}}
@@ -30,25 +30,29 @@ export default {
   methods: {
     logout: function () {
       axios
-      // TODO ドメインを環境ごとに切り分ける
+        // TODO ドメインを環境ごとに切り分ける
         .post('http://localhost:8090/api/v1/auth/logout', {}, {
           xsrfHeaderName: 'X-XSRF-TOKEN',
           withCredentials: true
         })
         .then(function (response) {
-          // TODO Vue側のユーザー情報削除
-          router.push('login')
+          // プロパティとローカルストレージからユーザー名を削除する
           this.userName = ''
           localStorage.removeItem('userName')
+          // ログイン画面に遷移
+          router.push('login')
         }.bind(this))
         .catch((res) => {
           console.error(res)
         })
+    },
+    // ユーザー名を設定する（ヘッダー表示時と、ログイン完了時に呼ばれる）
+    setUserName: function () {
+      this.userName = localStorage.userName
     }
   },
-  mounted () {
-    console.log(localStorage.userName)
-    this.userName = localStorage.userName
+  created () {
+    this.setUserName()
   }
 }
 </script>
@@ -58,10 +62,10 @@ export default {
   margin-bottom: 30px;
 }
 .navbar-brand {
-  margin-left: 30px;
+  margin-left: 200px;
 }
 .dropdown {
-  margin-right: 100px;
+  margin-right: 200px;
 }
 .dropdown:hover .dropdown-menu {
   display: block;
