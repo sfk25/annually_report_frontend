@@ -36,11 +36,11 @@ router.beforeEach((to, from, next) => {
           next()
         } else {
           // TODO ログイン画面に遷移先のURLを渡す
-          router.push('login')
+          router.push('/login')
         }
       })
       .catch((res) => {
-        router.push('login')
+        router.push('/login')
       })
   } else {
     next()

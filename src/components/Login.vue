@@ -19,9 +19,8 @@
       </tbody>
     </table>
 
-    <button @click="login">ログイン</button>
-    <!-- TODO ログアウトのボタン移動 -->
-    <button @click="logout">ログアウト</button>
+    <button class="btn btn-dark" @click="login">ログイン</button>
+    <div class="text-danger error" v-if="isFailedLogin">ログインに失敗しました</div>
 
   </div>
 </template>
@@ -34,7 +33,8 @@ export default {
   data () {
     return {
       email: '',
-      password: ''
+      password: '',
+      isFailedLogin: false
     }
   },
   methods: {
@@ -51,26 +51,16 @@ export default {
           withCredentials: true
         })
         .then(function (response) {
-          // TODO ユーザー情報の設定
-          router.push('articles')
-        })
+          // ローカルストレージにユーザー名を設定
+          localStorage.userName = response.data.name
+          // ヘッダーにユーザー名を設定する
+          this.$emit('setUserName')
+          router.push('/')
+        }.bind(this))
         .catch((res) => {
           console.error(res)
-        })
-    },
-    logout: function () {
-      axios
-        // TODO ドメインを環境ごとに切り分ける
-        .post('http://localhost:8090/api/v1/auth/logout', {}, {
-          xsrfHeaderName: 'X-XSRF-TOKEN',
-          withCredentials: true
-        })
-        .then(function (response) {
-          // TODO Vue側のユーザー情報削除
-        })
-        .catch((res) => {
-          console.error(res)
-        })
+          this.isFailedLogin = true
+        }).bind(this)
     }
   }
 }
@@ -94,5 +84,8 @@ li {
 }
 a {
   color: #42b983;
+}
+.error {
+  margin-top: 10px;
 }
 </style>
