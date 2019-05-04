@@ -53,7 +53,7 @@ export default {
           localStorage.userName = response.data.name
           // ヘッダーにユーザー名を設定する
           this.$emit('setUserName')
-          router.push('articles')
+          router.push('/')
         }.bind(this))
         .catch((res) => {
           console.error(res)
