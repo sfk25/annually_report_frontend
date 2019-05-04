@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Search from '@/components/Search'
 import Login from '@/components/Login'
+import UserRegister from '@/components/UserRegister'
 import axios from 'axios'
 
 Vue.use(Router)
@@ -19,6 +20,11 @@ const router = new Router({
       path: '/login',
       name: 'Login',
       component: Login
+    },
+    {
+      path: '/user/register',
+      name: 'UserRegister',
+      component: UserRegister
     }
   ]
 })
