@@ -19,7 +19,7 @@
       </tbody>
     </table>
 
-    <button @click="login">ログイン</button>
+    <button class="btn btn-dark" @click="login">ログイン</button>
 
   </div>
 </template>
