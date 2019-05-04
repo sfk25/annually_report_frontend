@@ -44,8 +44,6 @@ export default {
         password: this.password
       }
       axios
-        // TODO ドメインを環境ごとに切り分ける
-        // TODO 設定をどこかでまとめる
         .post('http://localhost:8090/api/v1/auth/login', params, {
           xsrfHeaderName: 'X-XSRF-TOKEN',
           withCredentials: true

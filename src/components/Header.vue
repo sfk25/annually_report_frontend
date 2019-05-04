@@ -37,7 +37,6 @@ export default {
   methods: {
     logout: function () {
       axios
-        // TODO ドメインを環境ごとに切り分ける
         .post('http://localhost:8090/api/v1/auth/logout', {}, {
           xsrfHeaderName: 'X-XSRF-TOKEN',
           withCredentials: true
