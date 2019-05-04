@@ -69,8 +69,6 @@ export default {
         groupId: this.groupId
       }
       axios
-        // TODO ドメインを環境ごとに切り分ける
-        // TODO 設定をどこかでまとめる
         .post('http://localhost:8090/api/v1/user/register', params, {
           xsrfHeaderName: 'X-XSRF-TOKEN',
           withCredentials: true
@@ -87,7 +85,6 @@ export default {
     },
     getGroups: function () {
       axios
-      // TODO ドメインを環境ごとに切り分ける
         .get('http://localhost:8090/api/v1/group', {
           xsrfHeaderName: 'X-XSRF-TOKEN',
           withCredentials: true
