@@ -20,6 +20,7 @@
     </table>
 
     <button class="btn btn-dark" @click="login">ログイン</button>
+    <div class="text-danger error" v-if="isFailedLogin">ログインに失敗しました</div>
 
   </div>
 </template>
@@ -32,7 +33,8 @@ export default {
   data () {
     return {
       email: '',
-      password: ''
+      password: '',
+      isFailedLogin: false
     }
   },
   methods: {
@@ -57,7 +59,8 @@ export default {
         }.bind(this))
         .catch((res) => {
           console.error(res)
-        })
+          this.isFailedLogin = true
+        }).bind(this)
     }
   }
 }
@@ -81,5 +84,8 @@ li {
 }
 a {
   color: #42b983;
+}
+.error {
+  margin-top: 10px;
 }
 </style>
