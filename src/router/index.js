@@ -38,7 +38,6 @@ const router = new Router({
 router.beforeEach((to, from, next) => {
   if (to.matched.some(record => record.meta.requiresAuth)) {
     axios
-    // TODO ドメインを環境ごとに切り分けたい
       .post('http://localhost:8090/api/v1/auth/init', {}, {
         xsrfHeaderName: 'X-XSRF-TOKEN',
         withCredentials: true
@@ -47,7 +46,6 @@ router.beforeEach((to, from, next) => {
         if (response.data) {
           next()
         } else {
-          // TODO ログイン画面に遷移先のURLを渡す
           router.push('/login')
         }
       })

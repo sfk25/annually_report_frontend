@@ -65,11 +65,6 @@
     </tbody>
   </table>
 
-  <!-- TODO 条件のクリア機能 -->
-  <!-- TODO 並び替え機能 -->
-  <!-- TODO 件数表示 -->
-  <!-- TODO ページネーション機能かもっと見るボタン -->
-
   <list v-bind:articles="articles"></list>
 
 </div>

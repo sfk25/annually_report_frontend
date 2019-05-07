@@ -4,7 +4,6 @@
   <table class="table table-bordered table-hover">
     <thead>
     <tr class="table-active">
-      <!-- TODO コメント数、いいね数 -->
       <td>タイトル</td>
       <td>グループ</td>
       <td>氏名</td>
@@ -20,13 +19,11 @@
       <td>{{article.groupName}}</td>
       <td>{{article.userName}}</td>
       <td>
-        <!-- TODO 無いときの表示 -->
         <span v-for="(value, index) in article.tags" :key="index">
           {{value}}
         </span>
       </td>
       <td>
-        <!-- TODO 無いときの表示 -->
         <span v-for="(value, index) in article.processes" :key="index">
           {{value}}
         </span>
