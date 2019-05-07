@@ -27,6 +27,8 @@
 <script>
 import axios from 'axios'
 import router from '../router'
+import {API_URL} from './../util/App'
+
 export default {
   name: 'Header',
   data () {
@@ -37,7 +39,7 @@ export default {
   methods: {
     logout: function () {
       axios
-        .post('http://localhost:8090/api/v1/auth/logout', {}, {
+        .post(API_URL.AUTH + '/logout', {}, {
           xsrfHeaderName: 'X-XSRF-TOKEN',
           withCredentials: true
         })

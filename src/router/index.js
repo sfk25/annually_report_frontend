@@ -5,6 +5,7 @@ import Search from '@/components/Search'
 import Login from '@/components/Login'
 import UserRegister from '@/components/UserRegister'
 import axios from 'axios'
+import {API_URL} from './../util/App'
 
 Vue.use(Router)
 
@@ -38,7 +39,7 @@ const router = new Router({
 router.beforeEach((to, from, next) => {
   if (to.matched.some(record => record.meta.requiresAuth)) {
     axios
-      .post('http://localhost:8090/api/v1/auth/init', {}, {
+      .post(API_URL.AUTH + '/init', {}, {
         xsrfHeaderName: 'X-XSRF-TOKEN',
         withCredentials: true
       })
@@ -46,10 +47,14 @@ router.beforeEach((to, from, next) => {
         if (response.data) {
           next()
         } else {
+          localStorage.removeItem('userName')
+          this.$emit('setUserName')
           router.push('/login')
         }
-      })
+      }.bind(this))
       .catch((res) => {
+        localStorage.removeItem('userName')
+        this.$emit('setUserName')
         router.push('/login')
       })
   } else {

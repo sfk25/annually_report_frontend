@@ -45,6 +45,8 @@
 <script>
 import axios from 'axios'
 import router from '../router'
+import {API_URL} from './../util/App'
+
 export default {
   name: 'Login',
   data () {
@@ -69,7 +71,7 @@ export default {
         groupId: this.groupId
       }
       axios
-        .post('http://localhost:8090/api/v1/user/register', params, {
+        .post(API_URL.USER + '/register', params, {
           xsrfHeaderName: 'X-XSRF-TOKEN',
           withCredentials: true
         })
@@ -85,7 +87,7 @@ export default {
     },
     getGroups: function () {
       axios
-        .get('http://localhost:8090/api/v1/group', {
+        .get(API_URL.GROUP, {
           xsrfHeaderName: 'X-XSRF-TOKEN',
           withCredentials: true
         })
