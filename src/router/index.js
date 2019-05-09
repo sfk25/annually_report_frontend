@@ -5,7 +5,7 @@ import Search from '@/components/Search'
 import Login from '@/components/Login'
 import UserRegister from '@/components/UserRegister'
 import axios from 'axios'
-import {API_URL} from './../util/App'
+import {API_URL} from './../constant/App'
 
 Vue.use(Router)
 

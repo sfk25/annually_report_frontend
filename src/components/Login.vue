@@ -28,7 +28,7 @@
 <script>
 import axios from 'axios'
 import router from '../router'
-import {API_URL} from './../util/App'
+import {API_URL} from './../constant/App'
 
 export default {
   name: 'Login',
