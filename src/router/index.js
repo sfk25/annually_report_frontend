@@ -48,13 +48,11 @@ router.beforeEach((to, from, next) => {
           next()
         } else {
           localStorage.removeItem('userName')
-          this.$emit('setUserName')
           router.push('/login')
         }
-      }.bind(this))
+      })
       .catch((res) => {
         localStorage.removeItem('userName')
-        this.$emit('setUserName')
         router.push('/login')
       })
   } else {
