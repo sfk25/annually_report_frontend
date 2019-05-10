@@ -28,6 +28,8 @@
 <script>
 import axios from 'axios'
 import router from '../router'
+import {API_URL} from './../constant/App'
+
 export default {
   name: 'Login',
   data () {
@@ -44,7 +46,7 @@ export default {
         password: this.password
       }
       axios
-        .post('http://localhost:8090/api/v1/auth/login', params, {
+        .post(API_URL.AUTH + '/login', params, {
           xsrfHeaderName: 'X-XSRF-TOKEN',
           withCredentials: true
         })
@@ -58,7 +60,7 @@ export default {
         .catch((res) => {
           console.error(res)
           this.isFailedLogin = true
-        }).bind(this)
+        })
     }
   }
 }

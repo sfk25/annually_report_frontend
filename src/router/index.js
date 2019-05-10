@@ -1,14 +1,22 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import Top from '@/components/Top'
 import Search from '@/components/Search'
 import Login from '@/components/Login'
+import UserRegister from '@/components/UserRegister'
 import axios from 'axios'
+import {API_URL} from './../constant/App'
 
 Vue.use(Router)
 
 const router = new Router({
   mode: 'history',
   routes: [
+    {
+      path: '/',
+      name: 'top',
+      component: Top
+    },
     {
       path: '/articles',
       name: 'search',
@@ -19,6 +27,11 @@ const router = new Router({
       path: '/login',
       name: 'Login',
       component: Login
+    },
+    {
+      path: '/user/register',
+      name: 'UserRegister',
+      component: UserRegister
     }
   ]
 })
@@ -26,7 +39,7 @@ const router = new Router({
 router.beforeEach((to, from, next) => {
   if (to.matched.some(record => record.meta.requiresAuth)) {
     axios
-      .post('http://localhost:8090/api/v1/auth/init', {}, {
+      .post(API_URL.AUTH + '/init', {}, {
         xsrfHeaderName: 'X-XSRF-TOKEN',
         withCredentials: true
       })
@@ -34,10 +47,12 @@ router.beforeEach((to, from, next) => {
         if (response.data) {
           next()
         } else {
+          localStorage.removeItem('userName')
           router.push('/login')
         }
       })
       .catch((res) => {
+        localStorage.removeItem('userName')
         router.push('/login')
       })
   } else {

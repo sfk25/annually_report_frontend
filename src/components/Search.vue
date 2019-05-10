@@ -73,6 +73,7 @@
 <script>
 import axios from 'axios'
 import List from './Search/List'
+import {API_URL} from './../constant/App'
 
 export default {
   name: 'Search',
@@ -108,8 +109,7 @@ export default {
         processId: this.processId
       }
       axios
-        // TODO ドメインを環境ごとに切り分ける
-        .post('http://localhost:8090/api/v1/article/search', params, {
+        .post(API_URL.ARTICLE + '/search', params, {
           xsrfHeaderName: 'X-XSRF-TOKEN',
           withCredentials: true
         })
@@ -123,8 +123,7 @@ export default {
     },
     getConds: function () {
       axios
-        // TODO ドメインを環境ごとに切り分ける
-        .get('http://localhost:8090/api/v1/article/getConds', {
+        .get(API_URL.ARTICLE + '/getConds', {
           xsrfHeaderName: 'X-XSRF-TOKEN',
           withCredentials: true
         })
