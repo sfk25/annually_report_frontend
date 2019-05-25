@@ -13,7 +13,7 @@
   <table class="table mx-auto w-75">
     <tbody>
     <tr>
-      <td>対象年度</td>
+      <th>対象年度</th>
       <td>
         <select v-model="targetYear" class="form-control">
           <option value="" selected>選択しない</option>
@@ -24,14 +24,14 @@
       </td>
     </tr>
     <tr>
-      <td>タイトル</td>
+      <th>タイトル</th>
       <td>
         <input type="text" class="form-control" v-model="title" placeholder="アサイン初日">
       </td>
     </tr>
     <tr>
       <!-- TODO 複数選択 -->
-      <td>使用した技術</td>
+      <th>使用した技術</th>
       <td>
         <input type="text" class="form-control" value="" list="tag-list" v-model="tag" placeholder="Java">
         <datalist id="tag-list">
@@ -43,7 +43,7 @@
     </tr>
     <tr>
       <!-- TODO 複数選択 -->
-      <td>担当した工程</td>
+      <th>担当した工程</th>
       <td>
         <select v-model="processId" class="form-control">
           <option value="0" selected>選択しない</option>
@@ -54,20 +54,21 @@
       </td>
     </tr>
     <tr>
-      <td>業務内容</td>
+      <th>業務内容</th>
       <td>
         <ul>
-          <li @click="hoge(true)">Write</li>
-          <li @click="hoge(false)">Preview</li>
+          <li @click="changeIsWrite(true)">Write</li>
+          <li @click="changeIsWrite(false)">Preview</li>
         </ul>
         <div id="editor">
           <textarea v-if="isWrite" :value="content" @input="update"></textarea>
-          <div v-if="!isWrite" v-html="compiledMarkdown"></div>
+          <div v-if="!isWrite" class="preview" v-html="compiledMarkdown"></div>
         </div>
       </td>
     </tr>
     </tbody>
   </table>
+  <button class="btn btn-dark" @click="register">登録</button>
 </div>
 </template>
 
@@ -127,8 +128,30 @@ export default {
     update: _.debounce(function (e) {
       this.content = e.target.value
     }, 300),
-    hoge: function (fuga) {
-      this.isWrite = fuga
+    changeIsWrite: function (isWrite) {
+      this.isWrite = isWrite
+    },
+    register: function () {
+      let params = {
+        targetYear: this.targetYear,
+        title: this.title,
+        tag: this.tag,
+        processId: this.processId,
+        content: this.content
+      }
+      axios
+        .post(API_URL.ARTICLE + '/register', params, {
+          xsrfHeaderName: 'X-XSRF-TOKEN',
+          withCredentials: true
+        })
+        .then(function (response) {
+          console.log('SUCCESS!!!')
+          console.log(response)
+        })
+        .catch((res) => {
+          console.log('ERROR!!!!')
+          console.error(res)
+        })
     }
   }
 }
@@ -153,15 +176,25 @@ li {
 a {
   color: #42b983;
 }
+.table th {
+  width: 150px;
+}
+.table td {
+  text-align: left;
+  width: 550px;
+}
 textarea, #editor div {
   display: inline-block;
   width: 100%;
+  height: 200px;
   vertical-align: top;
   box-sizing: border-box;
   padding: 0 20px;
   text-align: start;
 }
+/* TODO resizeを使えばサイズを可変できる? */
 textarea {
+  resize: none;
   border: none;
   outline: none;
   background-color: #f6f6f6;
@@ -171,5 +204,9 @@ textarea {
 }
 code {
   color: #f66;
+}
+.preview {
+  border: 1px solid #dee2e6;
+  overflow: scroll;
 }
 </style>
