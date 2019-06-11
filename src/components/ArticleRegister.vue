@@ -1,15 +1,6 @@
 <template>
 <div class="container">
   <h1>年報登録</h1>
-
-  <!-- 対象年度 -->
-  <!-- タイトル -->
-  <!-- 使用した技術 -->
-  <!-- 担当した工程 -->
-  <!-- 業務内容 -->
-  <!-- 今年の振り返り -->
-  <!-- 来年の目標 -->
-
   <table class="table mx-auto w-75">
     <tbody>
     <tr>
@@ -56,16 +47,28 @@
     <tr>
       <th>業務内容</th>
       <td>
-        <ul>
-          <li @click="changeIsWrite(true)">Write</li>
-          <li @click="changeIsWrite(false)">Preview</li>
-        </ul>
         <div id="editor">
-          <textarea v-if="isWrite" :value="content" @input="update"></textarea>
-          <div v-if="!isWrite" class="preview" v-html="compiledMarkdown"></div>
+          <ul class="nav nav-tabs">
+            <li class="nav-item">
+              <a href="#write" class="nav-link active" data-toggle="tab">Write</a>
+            </li>
+            <li class="nav-item">
+              <a href="#preview" class="nav-link" data-toggle="tab">Preview</a>
+            </li>
+          </ul>
+          <div class="tab-content">
+            <div id="write" class="tab-pane active">
+              <textarea class="write" :value="content" @input="update"></textarea>
+            </div>
+            <div id="preview" class="tab-pane">
+              <div class="preview" v-html="compiledMarkdown"></div>
+            </div>
+          </div>
         </div>
       </td>
     </tr>
+    <!-- TODO 今年の振り返り -->
+    <!-- TODO 来年の目標 -->
     </tbody>
   </table>
   <button class="btn btn-dark" @click="register">登録</button>
@@ -93,9 +96,7 @@ export default {
       /** 選択項目 */
       years: [],
       processes: [],
-      tags: [],
-      /** 判定値 */
-      isWrite: true
+      tags: []
     }
   },
   computed: {
@@ -128,9 +129,6 @@ export default {
     update: _.debounce(function (e) {
       this.content = e.target.value
     }, 300),
-    changeIsWrite: function (isWrite) {
-      this.isWrite = isWrite
-    },
     register: function () {
       let params = {
         targetYear: this.targetYear,
@@ -183,18 +181,16 @@ a {
   text-align: left;
   width: 550px;
 }
-textarea, #editor div {
-  display: inline-block;
-  width: 100%;
-  height: 200px;
+#editor {
   vertical-align: top;
-  box-sizing: border-box;
+  max-width: 600px;
   padding: 0 20px;
   text-align: start;
 }
-/* TODO resizeを使えばサイズを可変できる? */
-textarea {
-  resize: none;
+.write {
+  resize: both;
+  width: 600px;
+  height: 300px;
   border: none;
   outline: none;
   background-color: #f6f6f6;
@@ -206,7 +202,15 @@ code {
   color: #f66;
 }
 .preview {
+  width: 600px;
   border: 1px solid #dee2e6;
   overflow: scroll;
+  word-wrap:break-word;
+}
+.nav-tabs {
+  border-bottom: none;
+}
+.nav-link {
+  color: #495057;
 }
 </style>
