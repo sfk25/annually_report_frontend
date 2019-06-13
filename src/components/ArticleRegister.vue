@@ -71,7 +71,8 @@
     <!-- TODO 来年の目標 -->
     </tbody>
   </table>
-  <button class="btn btn-dark" @click="register">登録</button>
+  <button class="btn btn-dark" @click="register" v-bind:disabled="disabledRegister">登録</button>
+  <div class="text-danger error">{{errorMessage}}</div>
 </div>
 </template>
 
@@ -96,7 +97,11 @@ export default {
       /** 選択項目 */
       years: [],
       processes: [],
-      tags: []
+      tags: [],
+      /** ボタン制御 */
+      disabledRegister: false,
+      /** エラーメッセージ */
+      errorMessage: ''
     }
   },
   computed: {
@@ -130,6 +135,7 @@ export default {
       this.content = e.target.value
     }, 300),
     register: function () {
+      this.disabledRegister = true
       let params = {
         targetYear: this.targetYear,
         title: this.title,
@@ -143,13 +149,15 @@ export default {
           withCredentials: true
         })
         .then(function (response) {
-          console.log('SUCCESS!!!')
           console.log(response)
         })
         .catch((res) => {
-          console.log('ERROR!!!!')
           console.error(res)
+          this.errorMessage = res.response.data.message
         })
+        .finally(function () {
+          this.disabledRegister = false
+        }.bind(this))
     }
   }
 }
@@ -206,6 +214,7 @@ code {
   border: 1px solid #dee2e6;
   overflow: scroll;
   word-wrap:break-word;
+  padding: 10px;
 }
 .nav-tabs {
   border-bottom: none;
