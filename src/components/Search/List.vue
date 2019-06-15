@@ -1,5 +1,12 @@
 <template>
 <div>
+  <!-- モーダルサンプル -->
+  <button v-on:click="show">show!</button>
+  <modal name="user-detail" :width="300" :heigth="300">
+    <p>hello, world!</p>
+    <button v-on:click="hide">hide</button>
+  </modal>
+
   <h2>検索結果</h2>
   <table class="table table-bordered table-hover">
     <thead>
@@ -43,6 +50,13 @@ export default {
     articles: Array
   },
   methods: {
+    // サンプルメソッド追加
+    show: function () {
+      this.$modal.show('user-detail')
+    },
+    hide: function () {
+      this.$modal.hide('user-detail')
+    }
   }
 }
 </script>
