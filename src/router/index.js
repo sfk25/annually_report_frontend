@@ -4,6 +4,7 @@ import Top from '@/components/Top'
 import Search from '@/components/Search'
 import Login from '@/components/Login'
 import UserRegister from '@/components/UserRegister'
+import UserDetail from '@/components/UserDetail'
 import axios from 'axios'
 import {API_URL} from './../constant/App'
 
@@ -32,6 +33,11 @@ const router = new Router({
       path: '/user/register',
       name: 'UserRegister',
       component: UserRegister
+    },
+    {
+      path: '/user/detail/:id',
+      name: 'UserDetail',
+      component: UserDetail
     }
   ]
 })

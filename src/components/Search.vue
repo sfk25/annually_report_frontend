@@ -94,9 +94,8 @@ export default {
       years: []
     }
   },
-  mounted () {
-    this.search()
-    this.getConds()
+  components: {
+    list: List
   },
   methods: {
     search: function () {
@@ -140,8 +139,9 @@ export default {
         })
     }
   },
-  components: {
-    list: List
+  mounted () {
+    this.search()
+    this.getConds()
   }
 }
 </script>
