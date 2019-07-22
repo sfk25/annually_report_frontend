@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Top from '@/components/Top'
 import Search from '@/components/Search'
+import ArticleRegister from '@/components/ArticleRegister'
 import Login from '@/components/Login'
 import UserRegister from '@/components/UserRegister'
 import axios from 'axios'
@@ -32,6 +33,12 @@ const router = new Router({
       path: '/user/register',
       name: 'UserRegister',
       component: UserRegister
+    },
+    {
+      path: '/article/register',
+      name: 'ArticleRegister',
+      component: ArticleRegister,
+      meta: { requiresAuth: true }
     }
   ]
 })
