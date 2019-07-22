@@ -2,6 +2,7 @@
   <div class="container">
     <ul>
       <router-link to="/articles" tag="li">年報一覧</router-link>
+      <router-link to="/article/register" tag="li">年報登録</router-link>
       <router-link to="/login" tag="li">ログイン</router-link>
       <router-link to="/user/register" tag="li">ユーザー新規登録</router-link>
     </ul>
