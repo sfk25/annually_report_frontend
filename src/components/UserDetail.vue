@@ -3,7 +3,7 @@
 
       <h2>プロフィール</h2>
 
-      <table class="table table-bordered table-hover">
+      <table class="user-detail table table-bordered table-hover mx-auto w-75">
         <tbody>
         <tr>
           <td>グループ</td>
@@ -78,5 +78,7 @@ export default {
 </script>
 
 <style scoped>
-
+.user-detail {
+  max-width: 640px;
+}
 </style>
