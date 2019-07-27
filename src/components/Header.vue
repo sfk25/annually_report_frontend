@@ -10,7 +10,7 @@
             {{userName}}
           </button>
           <div class="dropdown-menu" aria-labelledby="dropdownMenu">
-            <button class="dropdown-item" type="button">プロフィール</button>
+            <button class="dropdown-item" type="button" @click="profile">プロフィール</button>
             <button class="dropdown-item" type="button">パスワード変更</button>
             <button class="dropdown-item" type="button" @click="logout">ログアウト</button>
           </div>
@@ -33,10 +33,14 @@ export default {
   name: 'Header',
   data () {
     return {
+      userId: null,
       userName: ''
     }
   },
   methods: {
+    profile: function () {
+      router.push('/user/detail/' + this.userId)
+    },
     logout: function () {
       axios
         .post(API_URL.AUTH + '/logout', {}, {
@@ -55,6 +59,7 @@ export default {
     },
     // ユーザー名を設定する（ヘッダー表示時と、ログイン完了時に呼ばれる）
     setUserName: function () {
+      this.userId = localStorage.userId
       this.userName = localStorage.userName
     }
   },
