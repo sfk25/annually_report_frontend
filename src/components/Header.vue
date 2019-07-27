@@ -58,13 +58,13 @@ export default {
         })
     },
     // ユーザー名を設定する（ヘッダー表示時と、ログイン完了時に呼ばれる）
-    setUserName: function () {
+    setUserHeader: function () {
       this.userId = localStorage.userId
       this.userName = localStorage.userName
     }
   },
   created () {
-    this.setUserName()
+    this.setUserHeader()
   }
 }
 </script>
@@ -81,5 +81,8 @@ export default {
 }
 .dropdown:hover .dropdown-menu {
   display: block;
+}
+.dropdown-menu {
+  margin-top: 0;
 }
 </style>
