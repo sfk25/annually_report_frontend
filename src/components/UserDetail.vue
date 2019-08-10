@@ -4,7 +4,7 @@
       <h2>プロフィール</h2>
 
       <div v-if="loginUserId == detailUserId">
-        <router-link :to="{name: 'UserEdit', params: {id : detailUserId}}">
+        <router-link :to="{name: 'UserUpdate', params: {id : detailUserId}}">
           プロフィール編集
         </router-link>
       </div>
@@ -27,7 +27,7 @@
         </tr>
         <tr>
           <td>入社日</td>
-          <td>{{user.enteringCompanyDate}}</td>
+          <td>{{formatDate(this.user.enteringCompanyDate)}}</td>
         </tr>
         <tr>
           <td>性別</td>
@@ -39,7 +39,7 @@
         </tr>
         <tr>
           <td>誕生日</td>
-          <td>{{user.birthday}}</td>
+          <td>{{formatDate(this.user.birthday)}}</td>
         </tr>
         <tr>
           <td>自己紹介</td>
@@ -52,6 +52,7 @@
 
 <script>
 import axios from 'axios'
+import moment from 'moment'
 import {API_URL, BLOOD_TYPES, SEX_TYPES} from './../constant/App'
 
 export default {
@@ -61,9 +62,10 @@ export default {
       loginUserId: 0,
       detailUserId: 0,
       user: {
-        groupId: '',
+        id: '',
         name: '',
         email: '',
+        groupId: '',
         enteringCompanyDate: '',
         sex: '',
         bloodType: '',
@@ -109,6 +111,11 @@ export default {
       this.loginUserId = localStorage.userId
       this.getUserDetail()
       this.getGroups()
+    },
+    formatDate: function (date) {
+      return date != null
+        ? moment(date).format('YYYY-MM-DD')
+        : '未入力'
     }
   },
   mounted () {

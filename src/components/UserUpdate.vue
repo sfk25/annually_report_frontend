@@ -27,7 +27,7 @@
         </tr>
         <tr>
           <td>入社日</td>
-          <td>{{user.enteringCompanyDate}}</td>
+          <td>{{formatDate(user.enteringCompanyDate, '未入力')}}</td>
         </tr>
         <tr>
           <td>性別</td>
@@ -58,7 +58,7 @@
         <tr>
           <td>自己紹介</td>
           <td>
-            <input type="text" class="form-control" v-model="user.selfIntroduction">
+            <textarea class="form-control" v-model="user.selfIntroduction"></textarea>
           </td>
         </tr>
         </tbody>
@@ -72,6 +72,7 @@
 
 <script>
 import axios from 'axios'
+import moment from 'moment'
 import {API_URL, BLOOD_TYPES, SEX_TYPES} from './../constant/App'
 
 export default {
@@ -81,9 +82,10 @@ export default {
       loginUserId: 0,
       detailUserId: 0,
       user: {
-        groupName: '',
+        id: '',
         name: '',
         email: '',
+        groupId: '',
         enteringCompanyDate: '',
         sex: '',
         bloodType: '',
@@ -98,8 +100,21 @@ export default {
   },
   methods: {
     update: function () {
-      console.log('Call update')
-      console.log(this.user)
+      this.user.enteringCompanyDate = ''
+      this.user.birthday = ''
+      axios
+        .post(API_URL.USER + '/update', this.user, {
+          xsrfHeaderName: 'X-XSRF-TOKEN',
+          withCredentials: true
+        })
+        .then(function (response) {
+          console.log(response)
+          alert('更新が完了しました')
+        })
+        .catch((res) => {
+          console.error(res)
+          this.errorMessage = res.response.data.message
+        })
     },
     getUserDetail: function () {
       this.detailUserId = this.$route.params.id
@@ -110,6 +125,7 @@ export default {
         })
         .then(function (response) {
           this.user = response.data
+          this.user.birthday = this.formatDate(this.user.birthday, null)
         }.bind(this))
         .catch((res) => {
           console.error(res)
@@ -129,6 +145,11 @@ export default {
           console.error(res)
           this.errorMessage = res.response.data.message
         })
+    },
+    formatDate: function (date, substitute) {
+      return date != null
+        ? moment(date).format('YYYY-MM-DD')
+        : substitute
     }
   },
   created () {
