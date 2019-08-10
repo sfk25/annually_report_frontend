@@ -1,25 +1,25 @@
 <template>
     <div class="container">
 
-      <h2>プロフィール</h2>
-
-      <div v-if="loginUserId == detailUserId">
-        <router-link :to="{name: 'UserEdit', params: {id : detailUserId}}">
-          プロフィール編集
-        </router-link>
-      </div>
+      <h2>プロフィール編集</h2>
 
       <table class="user-detail table table-bordered table-hover mx-auto w-75">
         <tbody>
         <tr>
           <td>グループ</td>
-          <td v-if="user.groupId === group.id" v-for="(group, index) in groups" :key="index">
-            {{group.value}}
+          <td>
+            <select v-model="user.groupId" class="form-control">
+              <option v-for="(group, index) in groups" :key="index" :value="group.id">
+                {{group.value}}
+              </option>
+            </select>
           </td>
         </tr>
         <tr>
           <td>名前</td>
-          <td>{{user.name}}</td>
+          <td>
+            <input type="text" class="form-control" v-model="user.name">
+          </td>
         </tr>
         <tr>
           <td>メールアドレス</td>
@@ -31,23 +31,43 @@
         </tr>
         <tr>
           <td>性別</td>
-          <td>{{sexTypes[user.sex]}}</td>
+          <td>
+            <select v-model="user.sex" class="form-control">
+              <option v-for="(value, index) in sexTypes" :value="index" :key="index">
+                {{value}}
+              </option>
+            </select>
+          </td>
         </tr>
         <tr>
           <td>血液型</td>
-          <td>{{bloodTypes[user.bloodType]}}</td>
+          <td>
+            <select v-model="user.bloodType" class="form-control">
+              <option v-for="(value, index) in bloodTypes" :value="index" :key="index">
+                {{value}}
+              </option>
+            </select>
+          </td>
         </tr>
         <tr>
           <td>誕生日</td>
-          <td>{{user.birthday}}</td>
+          <td>
+            <input type="date" class="form-control" v-model="user.birthday">
+          </td>
         </tr>
         <tr>
           <td>自己紹介</td>
-          <td>{{user.selfIntroduction}}</td>
+          <td>
+            <input type="text" class="form-control" v-model="user.selfIntroduction">
+          </td>
         </tr>
         </tbody>
       </table>
-      </div>
+
+      <button class="btn btn-dark" @click="update">更新</button>
+      <div class="text-danger error">{{errorMessage}}</div>
+
+    </div>
 </template>
 
 <script>
@@ -61,7 +81,7 @@ export default {
       loginUserId: 0,
       detailUserId: 0,
       user: {
-        groupId: '',
+        groupName: '',
         name: '',
         email: '',
         enteringCompanyDate: '',
@@ -72,11 +92,17 @@ export default {
       },
       groups: {},
       bloodTypes: BLOOD_TYPES,
-      sexTypes: SEX_TYPES
+      sexTypes: SEX_TYPES,
+      errorMessage: ''
     }
   },
   methods: {
+    update: function () {
+      console.log('Call update')
+      console.log(this.user)
+    },
     getUserDetail: function () {
+      this.detailUserId = this.$route.params.id
       axios
         .get(API_URL.USER + '/detail/' + this.detailUserId, {
           xsrfHeaderName: 'X-XSRF-TOKEN',
@@ -103,16 +129,11 @@ export default {
           console.error(res)
           this.errorMessage = res.response.data.message
         })
-    },
-    init: function () {
-      this.detailUserId = this.$route.params.id
-      this.loginUserId = localStorage.userId
-      this.getUserDetail()
-      this.getGroups()
     }
   },
-  mounted () {
-    this.init()
+  created () {
+    this.getUserDetail()
+    this.getGroups()
   }
 }
 </script>

@@ -17,3 +17,18 @@ export const API_URL = {
   ARTICLE: api('article'),
   GROUP: api('group')
 }
+
+// *****************************************************************
+// CONST
+// *****************************************************************
+export const BLOOD_TYPES = {
+  0: 'A',
+  1: 'B',
+  2: 'O',
+  3: 'AB'
+}
+
+export const SEX_TYPES = {
+  0: '女性',
+  1: '男性'
+}
