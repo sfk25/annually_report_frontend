@@ -27,7 +27,9 @@
         </tr>
         <tr>
           <td>入社日</td>
-          <td>{{formatDate(user.enteringCompanyDate, '未入力')}}</td>
+          <td>
+            <input type="date" class="form-control" v-model="user.enteringCompanyDate">
+          </td>
         </tr>
         <tr>
           <td>性別</td>
@@ -100,8 +102,6 @@ export default {
   },
   methods: {
     update: function () {
-      this.user.enteringCompanyDate = ''
-      this.user.birthday = ''
       axios
         .post(API_URL.USER + '/update', this.user, {
           xsrfHeaderName: 'X-XSRF-TOKEN',
@@ -126,6 +126,7 @@ export default {
         .then(function (response) {
           this.user = response.data
           this.user.birthday = this.formatDate(this.user.birthday, null)
+          this.user.enteringCompanyDate = this.formatDate(this.user.enteringCompanyDate, null)
         }.bind(this))
         .catch((res) => {
           console.error(res)
@@ -146,10 +147,10 @@ export default {
           this.errorMessage = res.response.data.message
         })
     },
-    formatDate: function (date, substitute) {
+    formatDate: function (date) {
       return date != null && date !== ''
         ? moment(date).format('YYYY-MM-DD')
-        : substitute
+        : null
     }
   },
   created () {
