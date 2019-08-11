@@ -108,9 +108,9 @@ export default {
           withCredentials: true
         })
         .then(function (response) {
-          console.log(response)
+          this.errorMessage = ''
           alert('更新が完了しました')
-        })
+        }.bind(this))
         .catch((res) => {
           console.error(res)
           this.errorMessage = res.response.data.message
@@ -147,7 +147,7 @@ export default {
         })
     },
     formatDate: function (date, substitute) {
-      return date != null
+      return date != null && date !== ''
         ? moment(date).format('YYYY-MM-DD')
         : substitute
     }
