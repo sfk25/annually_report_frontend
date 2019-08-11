@@ -14,7 +14,7 @@
     </tr>
     </thead>
     <tbody>
-    <tr v-for="(article, key, index) in articles" :key="index">
+    <tr v-for="(article, key, index) in articles" :key="index" @click="articleDetail(article.id)">
       <td>{{article.title}}</td>
       <td>{{article.groupName}}</td>
       <td>
@@ -49,10 +49,15 @@ export default {
   components: {
   },
   methods: {
+    articleDetail: function (id) {
+      console.log(id)
+    }
   }
 }
 </script>
 
 <style scoped>
-
+table tr:hover{
+  cursor: pointer;
+}
 </style>
