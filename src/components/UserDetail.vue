@@ -12,37 +12,37 @@
       <table class="user-detail table table-bordered table-hover mx-auto w-75">
         <tbody>
         <tr>
-          <td>グループ</td>
+          <td class="table-active">グループ</td>
           <td v-if="user.groupId === group.id" v-for="(group, index) in groups" :key="index">
             {{group.value}}
           </td>
         </tr>
         <tr>
-          <td>名前</td>
+          <td class="table-active">名前</td>
           <td>{{user.name}}</td>
         </tr>
         <tr>
-          <td>メールアドレス</td>
+          <td class="table-active">メールアドレス</td>
           <td>{{user.email}}</td>
         </tr>
         <tr>
-          <td>入社日</td>
+          <td class="table-active">入社日</td>
           <td>{{formatDate(this.user.enteringCompanyDate)}}</td>
         </tr>
         <tr>
-          <td>性別</td>
+          <td class="table-active">性別</td>
           <td>{{sexTypes[user.sex]}}</td>
         </tr>
         <tr>
-          <td>血液型</td>
+          <td class="table-active">血液型</td>
           <td>{{bloodTypes[user.bloodType]}}</td>
         </tr>
         <tr>
-          <td>誕生日</td>
+          <td class="table-active">誕生日</td>
           <td>{{formatDate(this.user.birthday)}}</td>
         </tr>
         <tr>
-          <td>自己紹介</td>
+          <td class="table-active">自己紹介</td>
           <td>{{user.selfIntroduction}}</td>
         </tr>
         </tbody>

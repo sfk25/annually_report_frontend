@@ -6,7 +6,7 @@
       <table class="user-detail table table-bordered table-hover mx-auto w-75">
         <tbody>
         <tr>
-          <td>グループ</td>
+          <td class="table-active">グループ</td>
           <td>
             <select v-model="user.groupId" class="form-control">
               <option v-for="(group, index) in groups" :key="index" :value="group.id">
@@ -16,23 +16,23 @@
           </td>
         </tr>
         <tr>
-          <td>名前</td>
+          <td class="table-active">名前</td>
           <td>
             <input type="text" class="form-control" v-model="user.name">
           </td>
         </tr>
         <tr>
-          <td>メールアドレス</td>
+          <td class="table-active">メールアドレス</td>
           <td>{{user.email}}</td>
         </tr>
         <tr>
-          <td>入社日</td>
+          <td class="table-active">入社日</td>
           <td>
             <input type="date" class="form-control" v-model="user.enteringCompanyDate">
           </td>
         </tr>
         <tr>
-          <td>性別</td>
+          <td class="table-active">性別</td>
           <td>
             <select v-model="user.sex" class="form-control">
               <option v-for="(value, index) in sexTypes" :value="index" :key="index">
@@ -42,7 +42,7 @@
           </td>
         </tr>
         <tr>
-          <td>血液型</td>
+          <td class="table-active">血液型</td>
           <td>
             <select v-model="user.bloodType" class="form-control">
               <option v-for="(value, index) in bloodTypes" :value="index" :key="index">
@@ -52,13 +52,13 @@
           </td>
         </tr>
         <tr>
-          <td>誕生日</td>
+          <td class="table-active">誕生日</td>
           <td>
             <input type="date" class="form-control" v-model="user.birthday">
           </td>
         </tr>
         <tr>
-          <td>自己紹介</td>
+          <td class="table-active">自己紹介</td>
           <td>
             <textarea class="form-control" v-model="user.selfIntroduction"></textarea>
           </td>
