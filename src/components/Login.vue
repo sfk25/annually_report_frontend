@@ -52,9 +52,11 @@ export default {
         })
         .then(function (response) {
           // ローカルストレージにユーザー名を設定
-          localStorage.userName = response.data.name
+          let user = response.data
+          localStorage.userId = user.id
+          localStorage.userName = user.name
           // ヘッダーにユーザー名を設定する
-          this.$emit('setUserName')
+          this.$emit('setUserHeader')
           router.push('/')
         }.bind(this))
         .catch((res) => {

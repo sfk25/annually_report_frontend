@@ -5,6 +5,8 @@ import Search from '@/components/Search'
 import ArticleRegister from '@/components/ArticleRegister'
 import Login from '@/components/Login'
 import UserRegister from '@/components/UserRegister'
+import UserDetail from '@/components/UserDetail'
+import UserUpdate from '@/components/UserUpdate'
 import axios from 'axios'
 import {API_URL} from './../constant/App'
 
@@ -38,6 +40,18 @@ const router = new Router({
       path: '/article/register',
       name: 'ArticleRegister',
       component: ArticleRegister,
+      meta: { requiresAuth: true }
+    },
+    {
+      path: '/user/detail/:id',
+      name: 'UserDetail',
+      component: UserDetail,
+      meta: { requiresAuth: true }
+    },
+    {
+      path: '/user/update/:id',
+      name: 'UserUpdate',
+      component: UserUpdate,
       meta: { requiresAuth: true }
     }
   ]

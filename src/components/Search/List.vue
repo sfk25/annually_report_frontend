@@ -17,7 +17,11 @@
     <tr v-for="(article, key, index) in articles" :key="index">
       <td>{{article.title}}</td>
       <td>{{article.groupName}}</td>
-      <td>{{article.userName}}</td>
+      <td>
+        <router-link :to="{ name : 'UserDetail', params : {id : article.userId} }">
+          {{article.userName}}
+        </router-link>
+      </td>
       <td>
         <span v-for="(value, index) in article.tags" :key="index">
           {{value}}
@@ -41,6 +45,8 @@ export default {
   name: 'List',
   props: {
     articles: Array
+  },
+  components: {
   },
   methods: {
   }

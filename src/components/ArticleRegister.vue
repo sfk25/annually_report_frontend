@@ -182,6 +182,9 @@ li {
 a {
   color: #42b983;
 }
+.table {
+  min-width: 750px;
+}
 .table th {
   width: 150px;
 }
