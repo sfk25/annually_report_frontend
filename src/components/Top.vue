@@ -5,6 +5,7 @@
       <router-link to="/article/register" tag="li">年報登録</router-link>
       <router-link to="/login" tag="li">ログイン</router-link>
       <router-link to="/user/register" tag="li">ユーザー新規登録</router-link>
+      <router-link to="/groups" tag="li">グループ一覧</router-link>
     </ul>
   </div>
 </template>
