@@ -1,7 +1,7 @@
 <template>
     <div class="container">
 
-      <h2>プロフィール編集</h2>
+      <h1>プロフィール編集</h1>
 
       <table class="user-detail table table-bordered table-hover mx-auto w-75">
         <tbody>

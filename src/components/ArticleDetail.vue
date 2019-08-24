@@ -1,0 +1,119 @@
+<template>
+    <div class="container">
+
+      <h1>年報詳細</h1>
+
+      <table class="table table-bordered table-hover mx-auto w-75">
+        <tbody>
+        <tr>
+          <td class="table-active">ユーザー</td>
+          <td>
+            <router-link :to="{ name : 'UserDetail', params : {id : article.userId} }">
+              {{article.userName}}
+            </router-link>
+          </td>
+        </tr>
+        <tr>
+          <td class="table-active">年度</td>
+          <td>{{article.createdYear}}</td>
+        </tr>
+        <tr>
+          <td class="table-active">タイトル</td>
+          <td>{{article.title}}</td>
+        </tr>
+        <tr>
+          <td class="table-active">使用した技術</td>
+          <td>
+            <span v-for="(value, index) in article.tags" :key="index">
+            {{value}}
+          </span>
+          </td>
+        </tr>
+        <tr>
+          <td class="table-active">担当した工程</td>
+          <td>
+            <span v-for="(value, index) in article.processes" :key="index">
+              {{value}}
+            </span>
+          </td>
+        </tr>
+        <tr>
+          <td class="table-active">業務内容</td>
+          <td>
+            <div class="preview">
+              <div class="tab-pane">
+                <div class="content" v-html="compiledMarkdown"></div>
+              </div>
+            </div>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+
+    </div>
+</template>
+
+<script>
+import axios from 'axios'
+import marked from 'marked'
+import {API_URL, BLOOD_TYPES, SEX_TYPES} from './../constant/App'
+
+export default {
+  name: 'User',
+  data () {
+    return {
+      loginUserId: 0,
+      detailUserId: 0,
+      article: {
+        userName: '',
+        createdYear: '',
+        title: '',
+        tags: [],
+        processes: [],
+        value: ''
+      },
+      groups: {},
+      bloodTypes: BLOOD_TYPES,
+      sexTypes: SEX_TYPES
+    }
+  },
+  computed: {
+    compiledMarkdown: function () {
+      return marked(this.article.value, { sanitize: true })
+    }
+  },
+  methods: {
+    getArticleDetail: function () {
+      axios
+        .get(API_URL.ARTICLE + '/detail/' + this.$route.params.id, {
+          xsrfHeaderName: 'X-XSRF-TOKEN',
+          withCredentials: true
+        })
+        .then(function (response) {
+          this.article = response.data
+          console.log(response.data)
+        }.bind(this))
+        .catch((res) => {
+          console.error(res)
+        })
+    }
+  },
+  mounted () {
+    this.getArticleDetail()
+  }
+}
+</script>
+
+<style scoped>
+table {
+  text-align: start;
+}
+.preview {
+  width: 600px;
+}
+.content {
+  overflow: scroll;
+  word-wrap:break-word;
+  text-align: start;
+}
+</style>

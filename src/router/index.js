@@ -5,6 +5,7 @@ import Search from '@/components/Search'
 import ArticleRegister from '@/components/ArticleRegister'
 import Login from '@/components/Login'
 import UserRegister from '@/components/UserRegister'
+import ArticleDetail from '@/components/ArticleDetail'
 import UserDetail from '@/components/UserDetail'
 import UserUpdate from '@/components/UserUpdate'
 import axios from 'axios'
@@ -40,6 +41,12 @@ const router = new Router({
       path: '/article/register',
       name: 'ArticleRegister',
       component: ArticleRegister,
+      meta: { requiresAuth: true }
+    },
+    {
+      path: '/article/detail/:id',
+      name: 'ArticleDetail',
+      component: ArticleDetail,
       meta: { requiresAuth: true }
     },
     {

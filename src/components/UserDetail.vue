@@ -1,7 +1,7 @@
 <template>
     <div class="container">
 
-      <h2>プロフィール</h2>
+      <h1>プロフィール</h1>
 
       <div v-if="loginUserId == detailUserId">
         <router-link :to="{name: 'UserUpdate', params: {id : detailUserId}}">
@@ -78,7 +78,7 @@ export default {
     }
   },
   methods: {
-    getUserDetail: function () {
+    getArticleDetail: function () {
       axios
         .get(API_URL.USER + '/detail/' + this.detailUserId, {
           xsrfHeaderName: 'X-XSRF-TOKEN',
@@ -109,7 +109,7 @@ export default {
     init: function () {
       this.detailUserId = this.$route.params.id
       this.loginUserId = localStorage.userId
-      this.getUserDetail()
+      this.getArticleDetail()
       this.getGroups()
     },
     formatDate: function (date) {

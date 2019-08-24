@@ -196,7 +196,6 @@ a {
   vertical-align: top;
   max-width: 600px;
   padding: 0 20px;
-  text-align: start;
 }
 .write {
   resize: both;
@@ -215,7 +214,6 @@ code {
 .preview {
   width: 600px;
   border: 1px solid #dee2e6;
-  overflow: scroll;
   word-wrap:break-word;
   padding: 10px;
 }

@@ -41,6 +41,8 @@
 </template>
 
 <script>
+import router from '../../router'
+
 export default {
   name: 'List',
   props: {
@@ -49,8 +51,8 @@ export default {
   components: {
   },
   methods: {
-    articleDetail: function (id) {
-      console.log(id)
+    articleDetail: function (articleId) {
+      router.push('/article/detail/' + articleId)
     }
   }
 }
