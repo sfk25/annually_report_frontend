@@ -13,7 +13,9 @@
               メンバーがいません
             </div>
             <div v-else v-for="(member, index2) in group.members" :key="index2">
-              <a href="#" @click="profile(member.id)">{{member.name}}</a>
+              <router-link :to="{ name : 'UserDetail', params : {id : member.id} }">
+                {{member.name}}
+              </router-link>
             </div>
           </div>
         </td>
@@ -32,7 +34,7 @@ export default {
   name: 'GroupList',
   data () {
     return {
-      groups: {}
+      groups: []
     }
   },
   methods: {
@@ -50,7 +52,6 @@ export default {
         }.bind(this))
         .catch((res) => {
           console.error(res)
-          this.errorMessage = res.response.data.message
         })
     },
     init: function () {
