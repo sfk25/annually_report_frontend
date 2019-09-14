@@ -1,6 +1,7 @@
 <template>
 <div class="container">
-  <h1>{{h1}}</h1>
+  <h1 v-if="isRegister === 'true'">年報登録</h1>
+  <h1 v-else>年報編集</h1>
   <table class="table mx-auto w-75">
     <tbody>
     <tr>
@@ -71,7 +72,10 @@
     <!-- TODO 来年の目標 -->
     </tbody>
   </table>
-  <button class="btn btn-dark" @click="register" v-bind:disabled="disabledRegister">登録</button>
+  <button class="btn btn-dark" @click="register" v-bind:disabled="disabledRegister">
+    <span v-if="isRegister === 'true'">登録</span>
+    <span v-else>更新</span>
+  </button>
   <div class="text-danger error">{{errorMessage}}</div>
 </div>
 </template>
@@ -85,7 +89,7 @@ import {API_URL} from './../constant/App'
 export default {
   name: 'ArticleRegister',
   props: {
-    h1: String,
+    isRegister: String,
     createdYear: '',
     title: String,
     tag: String,

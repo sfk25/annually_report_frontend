@@ -1,6 +1,6 @@
 <template>
   <article-edit
-    h1="年報登録"
+    isRegister=true
     createdYear=''
     title=""
     tag=""

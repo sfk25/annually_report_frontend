@@ -1,6 +1,6 @@
 <template>
   <article-edit
-    h1="年報編集"
+    isRegister=false
     :createdYear="article.createdYear"
     :title="article.title"
     :tag="article.tags[0]"
