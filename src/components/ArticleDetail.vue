@@ -3,6 +3,12 @@
 
       <h1>年報詳細</h1>
 
+      <div v-if="loginUserId == article.id">
+        <router-link :to="{ name : 'ArticleUpdate', params : {id : article.userId} }">
+          この年報を編集する
+        </router-link>
+      </div>
+
       <table class="table table-bordered table-hover mx-auto w-75">
         <tbody>
         <tr>
@@ -56,7 +62,7 @@
 <script>
 import axios from 'axios'
 import marked from 'marked'
-import {API_URL, BLOOD_TYPES, SEX_TYPES} from './../constant/App'
+import {API_URL} from './../constant/App'
 
 export default {
   name: 'User',
@@ -65,16 +71,16 @@ export default {
       loginUserId: 0,
       detailUserId: 0,
       article: {
+        id: 0,
         userName: '',
+        userId: '',
         createdYear: '',
         title: '',
         tags: [],
         processes: [],
         value: ''
       },
-      groups: {},
-      bloodTypes: BLOOD_TYPES,
-      sexTypes: SEX_TYPES
+      groups: {}
     }
   },
   computed: {
@@ -91,15 +97,18 @@ export default {
         })
         .then(function (response) {
           this.article = response.data
-          console.log(response.data)
         }.bind(this))
         .catch((res) => {
           console.error(res)
         })
+    },
+    init: function () {
+      this.loginUserId = localStorage.userId
+      this.getArticleDetail()
     }
   },
   mounted () {
-    this.getArticleDetail()
+    this.init()
   }
 }
 </script>

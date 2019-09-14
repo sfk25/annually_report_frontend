@@ -6,6 +6,7 @@ import ArticleRegister from '@/components/ArticleRegister'
 import Login from '@/components/Login'
 import UserRegister from '@/components/UserRegister'
 import ArticleDetail from '@/components/ArticleDetail'
+import ArticleUpdate from '@/components/ArticleUpdate'
 import UserDetail from '@/components/UserDetail'
 import UserUpdate from '@/components/UserUpdate'
 import axios from 'axios'
@@ -33,9 +34,21 @@ const router = new Router({
       component: Login
     },
     {
+      path: '/user/detail/:id',
+      name: 'UserDetail',
+      component: UserDetail,
+      meta: { requiresAuth: true }
+    },
+    {
       path: '/user/register',
       name: 'UserRegister',
       component: UserRegister
+    },
+    {
+      path: '/user/update/:id',
+      name: 'UserUpdate',
+      component: UserUpdate,
+      meta: { requiresAuth: true }
     },
     {
       path: '/article/register',
@@ -50,15 +63,9 @@ const router = new Router({
       meta: { requiresAuth: true }
     },
     {
-      path: '/user/detail/:id',
-      name: 'UserDetail',
-      component: UserDetail,
-      meta: { requiresAuth: true }
-    },
-    {
-      path: '/user/update/:id',
-      name: 'UserUpdate',
-      component: UserUpdate,
+      path: '/article/update/:id',
+      name: 'ArticleUpdate',
+      component: ArticleUpdate,
       meta: { requiresAuth: true }
     }
   ]
