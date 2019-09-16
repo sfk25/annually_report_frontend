@@ -1,6 +1,6 @@
 <template>
 <div class="container">
-  <h1 v-if="isRegister === 'true'">年報登録</h1>
+  <h1 v-if="isRegister">年報登録</h1>
   <h1 v-else>年報編集</h1>
   <table class="table mx-auto w-75">
     <tbody>
@@ -73,7 +73,7 @@
     </tbody>
   </table>
   <button class="btn btn-dark" @click="register" v-bind:disabled="disabledRegister">
-    <span v-if="isRegister === 'true'">登録</span>
+    <span v-if="isRegister">登録</span>
     <span v-else>更新</span>
   </button>
   <div class="text-danger error">{{errorMessage}}</div>
@@ -89,14 +89,16 @@ import {API_URL} from './../constant/App'
 export default {
   name: 'ArticleRegister',
   props: {
-    isRegister: String,
+    isRegister: Boolean,
     createdYear: '',
     title: String,
     tag: String,
     processId: String,
     content: String,
     reviewLastYear: String,
-    goalNextYear: String
+    goalNextYear: String,
+    disabledRegister: Boolean,
+    errorMessage: ''
   },
   data () {
     return {
@@ -112,7 +114,7 @@ export default {
         createdYear: '',
         title: '',
         tag: '',
-        processId: '',
+        processId: '0',
         content: '',
         reviewLastYear: '',
         goalNextYear: ''
@@ -120,11 +122,7 @@ export default {
       /** 選択項目 */
       years: [],
       processes: [],
-      tags: [],
-      /** ボタン制御 */
-      disabledRegister: false,
-      /** エラーメッセージ */
-      errorMessage: ''
+      tags: []
     }
   },
   computed: {
@@ -168,33 +166,7 @@ export default {
       this.article.content = e.target.value
     }, 300),
     register: function () {
-      // TODO 親から制御する
-      this.disabledRegister = true
-      // TODO エラーメッセージも親から制御する
       this.$emit('save', this.article)
-      this.disabledRegister = false
-      // let params = {
-      //   createdYear: this.createdYear,
-      //   title: this.title,
-      //   tag: this.tag,
-      //   processId: this.processId,
-      //   content: this.content
-      // }
-      // axios
-      //   .post(API_URL.ARTICLE + '/register', params, {
-      //     xsrfHeaderName: 'X-XSRF-TOKEN',
-      //     withCredentials: true
-      //   })
-      //   .then(function (response) {
-      //     console.log(response)
-      //   })
-      //   .catch((res) => {
-      //     console.error(res)
-      //     this.errorMessage = res.response.data.message
-      //   })
-      //   .finally(function () {
-      //     this.disabledRegister = false
-      //   }.bind(this))
     }
   }
 }

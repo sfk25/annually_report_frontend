@@ -21,7 +21,7 @@
         </tr>
         <tr>
           <td class="table-active">年度</td>
-          <td>{{article.createdYear}}</td>
+          <td>{{article.createdYear}}年</td>
         </tr>
         <tr>
           <td class="table-active">タイトル</td>
@@ -38,9 +38,11 @@
         <tr>
           <td class="table-active">担当した工程</td>
           <td>
-            <span v-for="(value, index) in article.processes" :key="index">
-              {{value}}
-            </span>
+            <div v-for="(value, index) in article.processes" :key="index">
+              <span v-if="value == process.id" v-for="(process, index) in processes" :key="index">
+                {{process.value}}
+              </span>
+            </div>
           </td>
         </tr>
         <tr>
@@ -80,7 +82,8 @@ export default {
         processes: [],
         value: ''
       },
-      groups: {}
+      groups: [],
+      process: []
     }
   },
   computed: {
@@ -102,9 +105,25 @@ export default {
           console.error(res)
         })
     },
+    getConds: function () {
+      axios
+        .get(API_URL.ARTICLE + '/getConds', {
+          xsrfHeaderName: 'X-XSRF-TOKEN',
+          withCredentials: true
+        })
+        .then(function (response) {
+          let data = response.data
+          this.processes = data.processes
+        }.bind(this))
+        .catch((res) => {
+          console.log('error')
+          console.error(res)
+        })
+    },
     init: function () {
       this.loginUserId = localStorage.userId
       this.getArticleDetail()
+      this.getConds()
     }
   },
   mounted () {

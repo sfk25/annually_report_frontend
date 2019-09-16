@@ -1,17 +1,22 @@
 <template>
   <article-edit
-    isRegister=true
+    :isRegister="isRegister"
     createdYear=''
     title=""
     tag=""
-    processId=0
+    processId='0'
     content=""
+    :disabledRegister="disabledRegister"
+    :errorMessage="errorMessage"
     @save="register"
   >
   </article-edit>
 </template>
 
 <script>
+import axios from 'axios'
+import router from '../router'
+import {API_URL} from './../constant/App'
 import ArticleEdit from './ArticleEdit'
 
 export default {
@@ -19,11 +24,43 @@ export default {
   components: {
     'article-edit': ArticleEdit
   },
+  data () {
+    return {
+      isRegister: true,
+      disabledRegister: false,
+      errorMessage: ''
+    }
+  },
   methods: {
     register: function (article) {
-      console.log('KKKK')
+      this.disabledRegister = true
       console.log(article)
-      // TODO 登録
+      let params = {
+        createdYear: article.createdYear,
+        title: article.title,
+        tag: article.tag,
+        processId: article.processId,
+        content: article.content
+      }
+      axios
+        .post(API_URL.ARTICLE + '/register', params, {
+          xsrfHeaderName: 'X-XSRF-TOKEN',
+          withCredentials: true
+        })
+        .then(function (response) {
+          console.log(response)
+          this.errorMessage = ''
+          if (window.confirm('登録が完了しました')) {
+            router.push('/article/detail/' + response.data)
+          }
+        }.bind(this))
+        .catch((res) => {
+          console.error(res)
+          this.errorMessage = res.response.data.message
+        })
+        .finally(function () {
+          this.disabledRegister = false
+        }.bind(this))
     }
   }
 }

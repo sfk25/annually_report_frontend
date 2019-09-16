@@ -1,12 +1,14 @@
 <template>
   <article-edit
-    isRegister=false
+    :isRegister="isRegister"
     :createdYear="article.createdYear"
     :title="article.title"
     :tag="article.tags[0]"
     :processId=article.processes[0]
     :content="article.value"
     @save="update"
+    :disabledRegister="disabledRegister"
+    :errorMessage="errorMessage"
   >
   </article-edit>
 </template>
@@ -23,6 +25,7 @@ export default {
   },
   data () {
     return {
+      isRegister: false,
       // loginUserId: 0,
       // detailUserId: 0,
       article: {
@@ -33,7 +36,9 @@ export default {
         tags: [],
         processes: [],
         value: ''
-      }
+      },
+      disabledRegister: false,
+      errorMessage: ''
     }
   },
   methods: {
@@ -53,9 +58,31 @@ export default {
         })
     },
     update: function (article) {
-      console.log('KKKK')
+      this.disabledRegister = true
       console.log(article)
-      // TODO 更新
+      let params = {
+        createdYear: article.createdYear,
+        title: article.title,
+        tag: article.tag,
+        processId: article.processId,
+        content: article.content
+      }
+      axios
+        .post(API_URL.ARTICLE + '/update', params, {
+          xsrfHeaderName: 'X-XSRF-TOKEN',
+          withCredentials: true
+        })
+        .then(function (response) {
+          console.log(response)
+          this.errorMessage = ''
+        })
+        .catch((res) => {
+          console.error(res)
+          this.errorMessage = res.response.data.message
+        })
+        .finally(function () {
+          this.disabledRegister = false
+        }.bind(this))
     }
   },
   created () {
