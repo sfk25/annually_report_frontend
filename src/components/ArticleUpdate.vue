@@ -61,6 +61,7 @@ export default {
       this.disabledRegister = true
       console.log(article)
       let params = {
+        id: this.$route.params.id,
         createdYear: article.createdYear,
         title: article.title,
         tag: article.tag,
@@ -82,6 +83,7 @@ export default {
         })
         .finally(function () {
           this.disabledRegister = false
+          window.confirm('更新が完了しました')
         }.bind(this))
     }
   },
