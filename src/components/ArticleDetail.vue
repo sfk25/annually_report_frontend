@@ -75,7 +75,7 @@ export default {
       article: {
         id: 0,
         userName: '',
-        userId: '',
+        userId: 0,
         createdYear: '',
         title: '',
         tags: [],
