@@ -3,8 +3,8 @@
 
       <h1>年報詳細</h1>
 
-      <div v-if="loginUserId == article.id">
-        <router-link :to="{ name : 'ArticleUpdate', params : {id : article.userId} }">
+      <div v-if="loginUserId == article.userId">
+        <router-link :to="{ name : 'ArticleUpdate', params : {id : article.id} }">
           この年報を編集する
         </router-link>
       </div>
@@ -39,7 +39,7 @@
           <td class="table-active">担当した工程</td>
           <td>
             <div v-for="(value, index) in article.processes" :key="index">
-              <span v-if="value == process.id" v-for="(process, index) in processes" :key="index">
+              <span v-if="value == process.id" v-for="(process, index2) in processes" :key="index2">
                 {{process.value}}
               </span>
             </div>
@@ -83,7 +83,7 @@ export default {
         value: ''
       },
       groups: [],
-      process: []
+      processes: []
     }
   },
   computed: {
