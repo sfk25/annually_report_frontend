@@ -11,6 +11,7 @@ import UserDetail from '@/components/UserDetail'
 import UserUpdate from '@/components/UserUpdate'
 import axios from 'axios'
 import {API_URL} from './../constant/App'
+import GroupList from '../components/GroupList'
 
 Vue.use(Router)
 
@@ -66,6 +67,12 @@ const router = new Router({
       path: '/article/update/:id',
       name: 'ArticleUpdate',
       component: ArticleUpdate,
+      meta: { requiresAuth: true }
+    },
+    {
+      path: '/groups',
+      name: 'GroupList',
+      component: GroupList,
       meta: { requiresAuth: true }
     }
   ]
