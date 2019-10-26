@@ -1,14 +1,15 @@
 <template>
   <article-edit
+    v-if="isShow"
     :isRegister="isRegister"
     :createdYear="article.createdYear"
     :title="article.title"
     :tag="article.tags[0]"
     :processId=article.processes[0]
     :content="article.value"
-    @save="update"
     :disabledRegister="disabledRegister"
     :errorMessage="errorMessage"
+    @save="update"
   >
   </article-edit>
 </template>
@@ -26,8 +27,6 @@ export default {
   data () {
     return {
       isRegister: false,
-      // loginUserId: 0,
-      // detailUserId: 0,
       article: {
         userName: '',
         userId: '',
@@ -38,7 +37,8 @@ export default {
         value: ''
       },
       disabledRegister: false,
-      errorMessage: ''
+      errorMessage: '',
+      isShow: false
     }
   },
   methods: {
@@ -50,8 +50,7 @@ export default {
         })
         .then(function (response) {
           this.article = response.data
-          console.log(this.article)
-          // console.log(this.loginUserId)
+          this.isShow = true
         }.bind(this))
         .catch((res) => {
           console.error(res)
@@ -59,7 +58,6 @@ export default {
     },
     update: function (article) {
       this.disabledRegister = true
-      console.log(article)
       let params = {
         id: this.$route.params.id,
         createdYear: article.createdYear,
@@ -74,16 +72,14 @@ export default {
           withCredentials: true
         })
         .then(function (response) {
-          console.log(response)
           this.errorMessage = ''
-        })
+          window.confirm('更新が完了しました')
+        }.bind(this))
         .catch((res) => {
-          console.error(res)
           this.errorMessage = res.response.data.message
         })
         .finally(function () {
           this.disabledRegister = false
-          window.confirm('更新が完了しました')
         }.bind(this))
     }
   },

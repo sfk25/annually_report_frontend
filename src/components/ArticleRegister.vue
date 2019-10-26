@@ -34,7 +34,6 @@ export default {
   methods: {
     register: function (article) {
       this.disabledRegister = true
-      console.log(article)
       let params = {
         createdYear: article.createdYear,
         title: article.title,
@@ -48,14 +47,12 @@ export default {
           withCredentials: true
         })
         .then(function (response) {
-          console.log(response)
           this.errorMessage = ''
           if (window.confirm('登録が完了しました')) {
             router.push('/article/detail/' + response.data)
           }
         }.bind(this))
         .catch((res) => {
-          console.error(res)
           this.errorMessage = res.response.data.message
         })
         .finally(function () {

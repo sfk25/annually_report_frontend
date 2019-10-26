@@ -25,7 +25,8 @@
       <!-- TODO 複数選択 -->
       <th>使用した技術</th>
       <td>
-        <input type="text" class="form-control" value="" list="tag-list" v-model="article.tag" placeholder="Java">
+        <input type="text" class="form-control" value="" list="tag-list"
+          v-model="article.tag" placeholder="Java">
         <datalist id="tag-list">
           <option v-for="(tag, index) in tags" :key="index" :value="tag.value">
             {{tag.value}}
@@ -95,8 +96,6 @@ export default {
     tag: String,
     processId: String,
     content: String,
-    reviewLastYear: String,
-    goalNextYear: String,
     disabledRegister: Boolean,
     errorMessage: ''
   },
@@ -104,20 +103,11 @@ export default {
     return {
       /** 入力内容 */
       article: {
-        // createdYear: this.createdYear,
-        // title: this.title,
-        // tag: this.tag,
-        // processId: this.processId,
-        // content: this.content,
-        // reviewLastYear: this.reviewLastYear,
-        // goalNextYear: this.goalNextYear
         createdYear: '',
         title: '',
         tag: '',
         processId: '0',
-        content: '',
-        reviewLastYear: '',
-        goalNextYear: ''
+        content: ''
       },
       /** 選択項目 */
       years: [],
@@ -132,16 +122,11 @@ export default {
   },
   mounted () {
     this.getConds()
-    // これはしょうがない
-    setTimeout(function () {
-      this.article.createdYear = this.createdYear
-      this.article.title = this.title
-      this.article.tag = this.tag
-      this.article.processId = this.processId
-      this.article.content = this.content
-      this.article.reviewLastYear = this.reviewLastYear
-      this.article.goalNextYear = this.goalNextYear
-    }.bind(this), 1000)
+    this.article.createdYear = this.createdYear
+    this.article.title = this.title
+    this.article.tag = this.tag
+    this.article.processId = this.processId
+    this.article.content = this.content
   },
   methods: {
     getConds: function () {
@@ -157,7 +142,6 @@ export default {
           this.years = data.years
         }.bind(this))
         .catch((res) => {
-          console.log('error')
           console.error(res)
         })
     },
