@@ -14,7 +14,7 @@
     </tr>
     </thead>
     <tbody>
-    <tr v-for="(article, key, index) in articles" :key="index">
+    <tr v-for="(article, key, index) in articles" :key="index" @click="articleDetail(article.id)">
       <td>{{article.title}}</td>
       <td>{{article.groupName}}</td>
       <td>
@@ -41,6 +41,8 @@
 </template>
 
 <script>
+import router from '../../router'
+
 export default {
   name: 'List',
   props: {
@@ -49,10 +51,15 @@ export default {
   components: {
   },
   methods: {
+    articleDetail: function (articleId) {
+      router.push('/article/detail/' + articleId)
+    }
   }
 }
 </script>
 
 <style scoped>
-
+table tr:hover{
+  cursor: pointer;
+}
 </style>
