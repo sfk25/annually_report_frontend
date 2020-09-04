@@ -15,7 +15,7 @@
   },
   "dependencies": {
     "lodash": "^4.17.11",
-    "marked": "^0.6.2",
+    "marked": "^0.7.0",
     "moment": "^2.24.0",
     "vue": "^2.5.2",
     "vue-router": "^3.0.1"
